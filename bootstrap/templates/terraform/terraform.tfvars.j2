@@ -1,0 +1,18 @@
+
+project_id       = "{{ project_id }}"
+region           = "{{ region }}"
+zone             = "{{ zone }}"
+gke_cluster_name = "{{ gke_cluster_name }}"
+num_nodes        = {{ num_nodes }}
+machine_type     = "{{ machine_type }}"
+disk_size        = {{ disk_size }}
+network_name     = "{{ network_name }}"
+ip_address_name  = "{{ ip_address_name }}"
+ssl_cert_name    = "{{ ssl_cert_crt }}"
+ssl_cert_crt     = "{{ ssl_cert_crt }}"
+ssl_cert_key     = "{{ ssl_cert_key }}"
+
+# Change to true to enable HTTPS and HTTP redirect for the load balancer
+https            = {{ https }}
+load_balancer    = {{ load_balancer }}
+bucket_tfstate   = "{{ bucket_tfstate }}"
