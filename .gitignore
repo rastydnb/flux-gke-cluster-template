@@ -12,3 +12,5 @@ kubeconfig
 .venv*
 # Terraform
 */.terraform
+# GKE
+gke_gcloud_auth_plugin_cache
