@@ -1,4 +1,3 @@
----
 #
 # Bootstrap configuration - config.yaml is gitignored
 #
@@ -6,7 +5,7 @@
 # Variables for configuration:
 
 # The ID of your Google Cloud project (e.g. "my-google-cloud-project")
-bootstrap_gcp_project_id:  "REPLACE_WITH_YOUR_PROJECT_ID"
+bootstrap_gcp_project_id: "REPLACE_WITH_YOUR_PROJECT_ID"
 
 # The geographic region for resources (e.g. "us-west1")
 # Pick a region with low spot VM prices. us-west4 is currently the cheapest. asia-east2 and southamerica-east1 are also cheap options.
@@ -42,7 +41,7 @@ bootstrap_gcp_region: "us-west4"
 bootstrap_gcp_zone: "us-west4-a"
 
 # The name of your GKE cluster (e.g. "my-gke-cluster")
-bootstrap_gke_cluster_name:  "my-cluster"
+bootstrap_gke_cluster_name: "my-cluster"
 
 # The number of nodes in the GKE cluster (e.g. 3)
 bootstrap_gke_num_nodes: 3
@@ -86,7 +85,6 @@ bootstrap_acme_production_enabled: false
 # CIDR your nodes are on (e.g. 192.168.1.0/24)
 #bootstrap_node_cidr:
 # The IP address to use with kube-vip, choose an available IP in your nodes network that is not being used
-#bootstrap_kube_vip_addr:
 # The Load balancer IP for k8s_gateway, choose an available IP in your nodes network that is not being used
 #bootstrap_k8s_gateway_addr:
 # The Load balancer IP for external ingress, choose an available IP in your nodes network that is not being used

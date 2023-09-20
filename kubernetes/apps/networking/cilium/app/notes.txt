@@ -1,0 +1,3 @@
+https://docs.cilium.io/en/stable/installation/k8s-install-helm/
+NATIVE_CIDR="$(gcloud container clusters describe "${NAME}" --zone "${ZONE}" --format 'value(clusterIpv4Cidr)')"
+echo $NATIVE_CIDR
