@@ -15,7 +15,6 @@ ssl_cert_key     = "certs/self-signed.key"
 # Change to true to enable HTTPS and HTTP redirect for the load balancer
 https            = true
 load_balancer    = false
-bucket_tfstate   = "pepe"
 
 
 

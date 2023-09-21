@@ -14,3 +14,5 @@ kubeconfig
 */.terraform
 # GKE
 gke_gcloud_auth_plugin_cache
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup

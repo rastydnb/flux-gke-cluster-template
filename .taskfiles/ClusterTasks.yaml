@@ -1,4 +1,3 @@
----
 version: "3"
 
 tasks:
@@ -30,8 +29,8 @@ tasks:
   hr-restart:
     desc: Restart all failed Helm Releases
     cmds:
-      - kubectl get hr --all-namespaces | grep False | awk '{print $2, $1}' | xargs -L1 bash -c 'flux suspend hr $0 -n $1'
-      - kubectl get hr --all-namespaces | grep False | awk '{print $2, $1}' | xargs -L1 bash -c 'flux resume hr $0 -n $1'
+    - kubectl get hr --all-namespaces | grep False | awk '{print $2, $1}' | xargs -L1 bash -c 'flux suspend hr $0 -n $1'
+    - kubectl get hr --all-namespaces | grep False | awk '{print $2, $1}' | xargs -L1 bash -c 'flux resume hr $0 -n $1'
 
   nodes:
     desc: List all the nodes in your cluster
@@ -60,8 +59,8 @@ tasks:
   certificates:
     desc: List all the certificates in your cluster
     cmds:
-      - kubectl get certificates {{.CLI_ARGS | default "-A"}}
-      - kubectl get certificaterequests {{.CLI_ARGS | default "-A"}}
+    - kubectl get certificates {{.CLI_ARGS | default "-A"}}
+    - kubectl get certificaterequests {{.CLI_ARGS | default "-A"}}
 
   ingresses:
     desc: List all the ingresses in your cluster
@@ -70,11 +69,11 @@ tasks:
   resources:
     desc: Gather common resources in your cluster, useful when asking for support
     cmds:
-      - task: nodes
-      - task: kustomizations
-      - task: helmreleases
-      - task: helmrepositories
-      - task: gitrepositories
-      - task: certificates
-      - task: ingresses
-      - task: pods
+    - task: nodes
+    - task: kustomizations
+    - task: helmreleases
+    - task: helmrepositories
+    - task: gitrepositories
+    - task: certificates
+    - task: ingresses
+    - task: pods
