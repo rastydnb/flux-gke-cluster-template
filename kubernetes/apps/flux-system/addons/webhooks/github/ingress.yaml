@@ -10,7 +10,7 @@ metadata:
 spec:
   ingressClassName: external
   rules:
-    - host: &host "flux-webhook.${SECRET_DOMAIN}"
+    - host: "back.nave.com"
       http:
         paths:
           - path: /hook/
