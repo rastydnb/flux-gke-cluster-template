@@ -1,0 +1,30 @@
+---
+
+- name: Verify required bootstrap vars are set
+  ansible.builtin.assert:
+    that: item | default('', true) | trim != ''
+    success_msg: Required bootstrap var {{ item }} exists and is defined
+    fail_msg: Required bootstrap var {{ item }} does not exists or is not defined
+  loop:
+    - bootstrap_gcp_project_id
+    - bootstrap_gcp_region
+    - bootstrap_gcp_zone
+    - bootstrap_gke_cluster_name
+    - bootstrap_gke_num_nodes
+    - bootstrap_gcp_machine_type
+    - bootstrap_gcp_disk_size
+    - bootstrap_gcp_network_name
+    - bootstrap_gcp_load_balancer_ip_address_name
+    - bootstrap_github_username
+    - bootstrap_github_repository_name
+    - bootstrap_github_repository_branch
+    - bootstrap_age_public_key
+    - bootstrap_timezone
+    - bootstrap_acme_email
+    - bootstrap_acme_production_enabled
+    - bootstrap_flux_github_webhook_token
+    - bootstrap_ipv6_enabled
+    - bootstrap_cluster_cidr
+    - bootstrap_service_cidr
+    - bootstrap_cloudflare_domain
+    - bootstrap_cloudflare_token

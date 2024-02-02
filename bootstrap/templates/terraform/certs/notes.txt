@@ -1,0 +1,3 @@
+Generar con ansible y no comitear?
+Porqué es necesario esto?
+Certificados autofirmados?
