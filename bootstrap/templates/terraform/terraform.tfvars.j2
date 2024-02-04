@@ -13,5 +13,14 @@ ssl_cert_crt     = "certs/self-signed.crt"
 ssl_cert_key     = "certs/self-signed.key"
 
 # Change to true to enable HTTPS and HTTP redirect for the load balancer
-https            = "{{ bootstrap_https }}"
-load_balancer    = "{{ bootstrap_load_balancer }}"
+https            = {{ bootstrap_https | tojson }}
+load_balancer    = {{ bootstrap_load_balancer | tojson}}
+
+secrets_map = [
+    {
+      name               = "demo-password-1"
+      autogenerate       = true
+      chars_count        = 24
+      use_special_charts = false
+    }
+  ]
