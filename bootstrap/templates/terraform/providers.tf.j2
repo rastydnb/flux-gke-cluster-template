@@ -1,5 +1,5 @@
-provider "helm" {
+provider "helm" {    
     kubernetes {
-        config_path = "../kubeconfig"
+        config_path = "/home/gipsydanger/.kube/config"
     }
 }

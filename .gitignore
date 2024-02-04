@@ -12,7 +12,6 @@ kubeconfig
 .venv*
 # Terraform
 */.terraform
-terraform/terraform.tfvars
 # GKE
 gke_gcloud_auth_plugin_cache
 terraform/terraform.tfstate
