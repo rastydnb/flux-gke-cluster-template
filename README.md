@@ -1,6 +1,6 @@
 # Deploy a Kubernetes cluster in GCP backed by Flux
 
-Welcome to a highly opinionated template for deploying a single Kubernetes ([gke](https://cloud.google.com/kubernetes-engine)) cluster with [Terraform](https://opentf.org/) and using [Flux](https://toolkit.fluxcd.io) to manage its state.
+Welcome to a highly opinionated template for deploying a single or more ([gke](https://cloud.google.com/kubernetes-engine)) Kubernetes clusters with [Terraform](https://opentf.org/) and using [Flux](https://toolkit.fluxcd.io) to manage its state.
 
 ## 👋 Introduction
 
@@ -16,15 +16,9 @@ Before we get started everything below must be taken into consideration, you mus
 
 - [ ] bring a **positive attitude** and be ready to learn and fail a lot. _The more you fail, the more you can learn from._
 
-## 💻 Machine Preparation
+## 💻 GKE Cluster ...
 
-### System requirements
-
-| Role    | Cores    | Memory        | System Disk               |
-|---------|----------|---------------|---------------------------|
-| Control | 4 _(6*)_ | 8GB _(24GB*)_ | 100GB _(500GB*)_ SSD/NVMe |
-| Worker  | 4 _(6*)_ | 8GB _(24GB*)_ | 100GB _(500GB*)_ SSD/NVMe |
-| _\* recommended_ |
+TODO
 
 
 ## 🚀 Getting Started
@@ -47,10 +41,7 @@ Once you have installed Debian on your nodes, there are 6 stages to getting a Fl
 
     📍 _See the task [installation docs](https://taskfile.dev/installation/) for other platforms_
 
-    ```sh
-    # Brew
-    brew install go-task
-    ```
+  TODO
 
 2. Install the most recent version of [direnv](https://direnv.net/)
 
@@ -58,10 +49,7 @@ Once you have installed Debian on your nodes, there are 6 stages to getting a Fl
 
     📍 _After installing `direnv` be sure to [hook it into your shell](https://direnv.net/docs/hook.html) and after that is done run `direnv allow` while in your repos directory._
 
-    ```sh
-    # Brew
-    brew install direnv
-    ```
+  TODO
 
 3. Setup a Python virual env and install Ansible by running the following task command.
 
@@ -74,66 +62,25 @@ Once you have installed Debian on your nodes, there are 6 stages to getting a Fl
 
 4. Install the required tools: [age](https://github.com/FiloSottile/age), [flux](https://toolkit.fluxcd.io/), [cloudflared](https://github.com/cloudflare/cloudflared), [kubectl](https://kubernetes.io/docs/tasks/tools/), [sops](https://github.com/getsops/sops)
 
-   ```sh
-   # Brew
-   task brew:deps
-   ```
+TODO
 
 ### 🔧 Stage 3: Do bootstrap configuration
 
-
+TODO
 
 ### ⚡ Stage 4: Prepare your gke configuration
 
-
+TODO
 
 ### ⛵ Stage 5: Use Terraform to install gke
 
-
+TODO
 
 ### 🔹 Stage 6: Install Flux in your cluster
 
 📍 _Here we will be installing [flux](https://fluxcd.io/flux/) after some quick bootstrap steps._
 
-1. Verify Flux can be installed
-
-    ```sh
-    flux check --pre
-    # ► checking prerequisites
-    # ✔ kubectl 1.27.3 >=1.18.0-0
-    # ✔ Kubernetes 1.27.3+k3s1 >=1.16.0-0
-    # ✔ prerequisites checks passed
-    ```
-
-2. Push you changes to git
-
-   📍 **Verify** all the `*.sops.yaml` and `*.sops.yaml` files under the `./ansible`, and `./kubernetes` directories are **encrypted** with SOPS
-
-    ```sh
-    git add -A
-    git commit -m "Initial commit :rocket:"
-    git push
-    ```
-
-3. Install Flux and sync the cluster to the Git repository
-
-    ```sh
-    task cluster:install
-    # namespace/flux-system configured
-    # customresourcedefinition.apiextensions.k8s.io/alerts.notification.toolkit.fluxcd.io created
-    # ...
-    ```
-
-4. Verify Flux components are running in the cluster
-
-    ```sh
-    kubectl -n flux-system get pods -o wide
-    # NAME                                       READY   STATUS    RESTARTS   AGE
-    # helm-controller-5bbd94c75-89sb4            1/1     Running   0          1h
-    # kustomize-controller-7b67b6b77d-nqc67      1/1     Running   0          1h
-    # notification-controller-7c46575844-k4bvr   1/1     Running   0          1h
-    # source-controller-7d6875bcb4-zqw9f         1/1     Running   0          1h
-    ```
+TODO
 
 ### 🎤 Verification Steps
 
@@ -143,21 +90,7 @@ Once you have installed Debian on your nodes, there are 6 stages to getting a Fl
 
 #### 🪝 Github Webhook
 
-By default Flux will periodically check your git repository for changes. In order to have Flux reconcile on `git push` you must configure Github to send `push` events.
-
-1. Obtain the webhook path
-
-    📍 _Hook id and path should look like `/hook/12ebd1e363c641dc3c2e430ecf3cee2b3c7a5ac9e1234506f6f5f3ce1230e123`_
-
-    ```sh
-    kubectl -n flux-system get receiver github-receiver -o jsonpath='{.status.webhookPath}'
-    ```
-
-2. Piece together the full URL with the webhook path appended
-
-    ```text
-    https://flux-webhook.${bootstrap_cloudflare_domain}/hook/12ebd1e363c641dc3c2e430ecf3cee2b3c7a5ac9e1234506f6f5f3ce1230e123
-    ```
+TODO
 
 3. Navigate to the settings of your repository on Github, under "Settings/Webhooks" press the "Add webhook" button. Fill in the webhook url and your `bootstrap_flux_github_webhook_token` secret and save.
 
@@ -173,45 +106,7 @@ The base Renovate configuration in your repository can be viewed at [.github/ren
 
 Below is a general guide on trying to debug an issue with an resource or application. For example, if a workload/resource is not showing up or a pod has started but in a `CrashLoopBackOff` or `Pending` state.
 
-1. Start by checking all Flux Kustomizations & Git Repository & OCI Repository and verify they are healthy.
-
-    ```sh
-    flux get sources oci -A
-    flux get sources git -A
-    flux get ks -A
-    ```
-
-2. Then check all the Flux Helm Releases and verify they are healthy.
-
-    ```sh
-    flux get hr -A
-    ```
-
-3. Then check the if the pod is present.
-
-    ```sh
-    kubectl -n <namespace> get pods -o wide
-    ```
-
-4. Then check the logs of the pod if its there.
-
-    ```sh
-    kubectl -n <namespace> logs <pod-name> -f
-    # or
-    stern -n <namespace> <fuzzy-name>
-    ```
-
-5. If a resource exists try to describe it to see what problems it might have.
-
-    ```sh
-    kubectl -n <namespace> describe <resource> <name>
-    ```
-
-6. Check the namespace events
-
-    ```sh
-    kubectl -n <namespace> get events --sort-by='.metadata.creationTimestamp'
-    ```
+TODO
 
 Resolving problems that you have could take some tweaking of your YAML manifests in order to get things working, other times it could be a external factor like permissions on NFS. If you are unable to figure out your problem see the help section below.
 
@@ -230,93 +125,11 @@ To browse or get ideas on applications people are running, community member [@wh
 
 #### Storage
 
-The included CSI (`local-path-provisioner`) is a great start for storage but soon you might find you need more features like replicated block storage, or to connect to a NFS/SMB/iSCSI server. If you need any of those features be sure to check out the projects like [rook-ceph](https://github.com/rook/rook), [longhorn](https://github.com/longhorn/longhorn), [openebs](https://github.com/openebs/openebs), [democratic-csi](https://github.com/democratic-csi/democratic-csi), [csi-driver-nfs](https://github.com/kubernetes-csi/csi-driver-nfs),
-and [synology-csi](https://github.com/SynologyOpenSource/synology-csi).
+TODO
 
 #### Authenticate Flux over SSH
 
-Authenticating Flux to your git repository has a couple benefits like using a private git repository and/or using the Flux [Image Automation Controllers](https://fluxcd.io/docs/components/image/).
-
-By default this template only works on a public Github repository, it is advised to keep your repository public.
-
-The benefits of a public repository include:
-
-- Debugging or asking for help, you can provide a link to a resource you are having issues with.
-- Adding a topic to your repository of `k8s-at-home` to be included in the [k8s-at-home-search](https://nanne.dev/k8s-at-home-search/). This search helps people discover different configurations of Helm charts across others Flux based repositories.
-
-<details>
-  <summary>Expand to read guide on adding Flux SSH authentication</summary>
-
-1. Generate new SSH key:
-
-    ```sh
-    ssh-keygen -t ecdsa -b 521 -C "github-deploy-key" -f ./kubernetes/bootstrap/github-deploy.key -q -P ""
-    ```
-
-2. Paste public key in the deploy keys section of your repository settings
-3. Create sops secret in `./kubernetes/bootstrap/github-deploy-key.sops.yaml` with the contents of:
-
-   ```yaml
-   apiVersion: v1
-   kind: Secret
-   metadata:
-     name: github-deploy-key
-     namespace: flux-system
-   stringData:
-     # 3a. Contents of github-deploy-key
-     identity: |
-       -----BEGIN OPENSSH PRIVATE KEY-----
-           ...
-       -----END OPENSSH PRIVATE KEY-----
-     # 3b. Output of curl --silent https://api.github.com/meta | jq --raw-output '"github.com "+.ssh_keys[]'
-     known_hosts: |
-       github.com ssh-ed25519 ...
-       github.com ecdsa-sha2-nistp256 ...
-       github.com ssh-rsa ...
-   ```
-
-4. Encrypt secret:
-
-    ```sh
-    sops --encrypt --in-place ./kubernetes/bootstrap/github-deploy-key.sops.yaml
-    ```
-
-5. Apply secret to cluster:
-
-    ```sh
-    sops --decrypt ./kubernetes/bootstrap/github-deploy-key.sops.yaml | kubectl apply -f -
-    ```
-
-6. Update `./kubernetes/flux/config/cluster.yaml`:
-
-    ```yaml
-    apiVersion: source.toolkit.fluxcd.io/v1beta2
-    kind: GitRepository
-    metadata:
-      name: home-kubernetes
-      namespace: flux-system
-    spec:
-      interval: 10m
-      # 6a: Change this to your user and repo names
-      url: ssh://git@github.com/$user/$repo
-      ref:
-        branch: main
-      secretRef:
-        name: github-deploy-key
-    ```
-
-7. Commit and push changes
-8. Force flux to reconcile your changes
-
-    ```sh
-    flux reconcile -n flux-system kustomization cluster --with-source
-    ```
-
-9. Verify git repository is now using SSH:
-
-    ```sh
-    flux get sources git -A
-    ```
+TODO
 
 10. Optionally set your repository to Private in your repository settings.
 
