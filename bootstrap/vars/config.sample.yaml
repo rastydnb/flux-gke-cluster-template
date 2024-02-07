@@ -59,6 +59,10 @@ bootstrap_gcp_network_name: "my-network"
 # The name of the static IP Address for the load balancer (e.g. "my-static-ip")
 bootstrap_gcp_load_balancer_ip_address_name: "my-static-ip"
 
+bootstrap_load_balancer: false
+
+bootstrap_https: true
+
 # Github username (e.g. onedr0p)
 bootstrap_github_username:
 # Github repository (e.g. flux-cluster-template)
@@ -104,8 +108,8 @@ bootstrap_service_cidr: 10.43.0.0/16
 
 # Cloudflare domain
 bootstrap_cloudflare_domain:
-# Cloudflare API Token (not API Key)
-#bootstrap_cloudflare_token:
+#Cloudflare API Token (not API Key)
+bootstrap_cloudflare_token:
 # Cloudflared Account Tag (cat ~/.cloudflared/*.json | jq -r .AccountTag)
 #bootstrap_cloudflare_account_tag:
 # Cloudflared Tunnel Secret (cat ~/.cloudflared/*.json | jq -r .TunnelSecret)
