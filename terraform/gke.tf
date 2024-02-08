@@ -1,6 +1,6 @@
 # This will construct a VPC-native, private GKE cluster. For effective routing from the Regional External HTTP Load Balancer,
 # having the VPC-native cluster is needed to make Gloo Edge's Envoy gateway-proxy pods routable via a standalone NEG.
-# See links in the comments below for specifics. This page is a good place to understand the overall solution: 
+# See links in the comments below for specifics. This page is a good place to understand the overall solution:
 # https://cloud.google.com/kubernetes-engine/docs/how-to/standalone-neg
 
 provider "google" {
@@ -21,12 +21,13 @@ resource "google_container_cluster" "default" {
   subnetwork = google_compute_subnetwork.default.name
   # Disable the Google Cloud Logging service because you may overrun the Logging free tier allocation, and it may be expensive
   logging_service = "none"
+  # On version 5.0.0+ of the provider, you must explicitly set deletion_protection=false (and run terraform apply to write the field to state) in order to destroy a cluster.
+  deletion_protection = false
 
   # Enable Workload Identity
   workload_identity_config {
     workload_pool = "${var.project_id}.svc.id.goog"
   }
-  
 
   node_config {
     # More info on Spot VMs with GKE https://cloud.google.com/kubernetes-engine/docs/how-to/spot-vms#create_a_cluster_with_enabled
@@ -47,8 +48,6 @@ resource "google_container_cluster" "default" {
     ]
   }
 
-
-  
   addons_config {
     http_load_balancing {
       # This needs to be enabled for the NEG to be automatically created for the ingress gateway svc
@@ -84,22 +83,25 @@ resource "google_container_cluster" "default" {
   }
 }
 
-resource "time_sleep" "wait_for_kube" {
+data "google_client_config" "default" {
   depends_on = [google_container_cluster.default]
-  # GKE master endpoint may not be immediately accessible, resulting in error, waiting does the trick
-  create_duration = "30s"
 }
 
-resource "null_resource" "local_k8s_context" {
-  depends_on = [time_sleep.wait_for_kube]
-  provisioner "local-exec" {
-    # Update your local gcloud and kubectl credentials for the newly created cluster
-    command = "for i in 1 2 3 4 5; do gcloud container clusters get-credentials ${var.gke_cluster_name} --project=${var.project_id} --zone=${var.zone} && break || sleep 60; done"
-  }
+locals {
+  kubeconfig_content = templatefile("${path.module}/kubeconfig.tpl", {
+    name                    = var.gke_cluster_name,
+    endpoint                = "https://${google_container_cluster.default.endpoint}",
+    cluster_ca_certificate = google_container_cluster.default.master_auth[0].cluster_ca_certificate,
+    access_token           = data.google_client_config.default.access_token
+  })
 }
 
+resource "local_file" "kubeconfig" {
+  content  = local.kubeconfig_content
+  filename = "../kubeconfig"
+}
 
 module "flux" {
-  depends_on = [ null_resource.local_k8s_context ]
+  depends_on = [ local_file.kubeconfig ]
   source = "./modules/flux"
 }
