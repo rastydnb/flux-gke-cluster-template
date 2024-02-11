@@ -46,6 +46,11 @@ resource "google_container_cluster" "default" {
       "https://www.googleapis.com/auth/devstorage.read_only",
       "https://www.googleapis.com/auth/servicecontrol",
     ]
+    taint {
+      key    = "node.cilium.io/agent-not-ready"
+      value  = "true"
+      effect = "NO_EXECUTE"
+    }
   }
 
   addons_config {
