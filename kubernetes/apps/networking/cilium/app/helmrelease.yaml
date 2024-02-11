@@ -1,4 +1,3 @@
----
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -32,13 +31,13 @@ spec:
       enabled: true
       metrics:
         enabled:
-          - dns:query
-          - drop
-          - tcp
-          - flow
-          - port-distribution
-          - icmp
-          - http
+        - dns:query
+        - drop
+        - tcp
+        - flow
+        - port-distribution
+        - icmp
+        - http
         serviceMonitor:
           enabled: true
         dashboards:
@@ -60,10 +59,10 @@ spec:
           annotations:
             hajimari.io/icon: simple-icons:cilium
           hosts:
-            - &host "hubble.${SECRET_DOMAIN}"
+          - &host "hubble.${SECRET_DOMAIN}"
           tls:
-            - hosts:
-                - *host
+          - hosts:
+            - *host
     nodeinit:
     # -- Enable the node initialization DaemonSet
       enabled: true
@@ -75,33 +74,40 @@ spec:
       enabled: true
     ipam:
       mode: kubernetes
+    ingressController:
+      enabled: true
+      default: true
+      service:
+        type: ClusterIP
+        annotations:
+          cloud.google.com/neg: '{"exposed_ports": {"80":{"name": "ingressgateway"}}}'
 
     # Config mantenida
     ipv4NativeRoutingCIDR: "${CLUSTER_CIDR}"
 
-    kubeProxyReplacement: strict
-    kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
+    # kubeProxyReplacement: strict
+    # kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
 
-    operator:
-      replicas: 1
-      rollOutPods: true
-      prometheus:
-        enabled: true
-        serviceMonitor:
-          enabled: true
-      dashboards:
-        enabled: true
-        annotations:
-          grafana_folder: Cilium
-    prometheus:
-      enabled: true
-      serviceMonitor:
-        enabled: true
-        trustCRDsExist: true
-    dashboards:
-      enabled: true
-      annotations:
-        grafana_folder: Cilium
-    rollOutCiliumPods: true
-    ####
+    # operator:
+    #   replicas: 1
+    #   rollOutPods: true
+    #   prometheus:
+    #     enabled: true
+    #     serviceMonitor:
+    #       enabled: true
+    #   dashboards:
+    #     enabled: true
+    #     annotations:
+    #       grafana_folder: Cilium
+    # prometheus:
+    #   enabled: true
+    #   serviceMonitor:
+    #     enabled: true
+    #     trustCRDsExist: true
+    # dashboards:
+    #   enabled: true
+    #   annotations:
+    #     grafana_folder: Cilium
+    # rollOutCiliumPods: true
+    # ####
 

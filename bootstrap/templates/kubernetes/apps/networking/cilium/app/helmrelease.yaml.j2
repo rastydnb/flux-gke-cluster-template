@@ -76,6 +76,13 @@ spec:
       enabled: true
     ipam:
       mode: kubernetes
+    ingressController:
+      enabled: true
+      default: true
+      service:
+        type: ClusterIP
+        annotations:
+          cloud.google.com/neg: '{"exposed_ports": {"80":{"name": "ingressgateway"}}}'
 
     # Config mantenida
     ipv4NativeRoutingCIDR: "${CLUSTER_CIDR}"
@@ -85,29 +92,29 @@ spec:
       enabled: true
     {% endif %}
 
-    kubeProxyReplacement: strict
-    kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
+    # kubeProxyReplacement: strict
+    # kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
 
-    operator:
-      replicas: 1
-      rollOutPods: true
-      prometheus:
-        enabled: true
-        serviceMonitor:
-          enabled: true
-      dashboards:
-        enabled: true
-        annotations:
-          grafana_folder: Cilium
-    prometheus:
-      enabled: true
-      serviceMonitor:
-        enabled: true
-        trustCRDsExist: true
-    dashboards:
-      enabled: true
-      annotations:
-        grafana_folder: Cilium
-    rollOutCiliumPods: true
-    ####
+    # operator:
+    #   replicas: 1
+    #   rollOutPods: true
+    #   prometheus:
+    #     enabled: true
+    #     serviceMonitor:
+    #       enabled: true
+    #   dashboards:
+    #     enabled: true
+    #     annotations:
+    #       grafana_folder: Cilium
+    # prometheus:
+    #   enabled: true
+    #   serviceMonitor:
+    #     enabled: true
+    #     trustCRDsExist: true
+    # dashboards:
+    #   enabled: true
+    #   annotations:
+    #     grafana_folder: Cilium
+    # rollOutCiliumPods: true
+    # ####
 
