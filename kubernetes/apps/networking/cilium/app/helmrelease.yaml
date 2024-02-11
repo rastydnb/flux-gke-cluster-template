@@ -25,7 +25,7 @@ spec:
     keepHistory: false
   values:
     cluster:
-      name: gke-cluster
+      name: ninjawombat
       id: 1
     hubble:
       enabled: true
