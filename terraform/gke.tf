@@ -88,7 +88,7 @@ data "google_client_config" "default" {
 }
 
 locals {
-  kubeconfig_content = templatefile("${path.module}/kubeconfig.tpl", {
+  kubeconfig_content = templatefile("../kubeconfig.tpl", {
     name                    = var.gke_cluster_name,
     endpoint                = "https://${google_container_cluster.default.endpoint}",
     cluster_ca_certificate = google_container_cluster.default.master_auth[0].cluster_ca_certificate,
