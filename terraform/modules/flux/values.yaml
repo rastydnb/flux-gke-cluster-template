@@ -1,0 +1,42 @@
+cli:
+  tolerations:
+    - key: "node.cilium.io/agent-not-ready"
+      operator: "Equal"
+      value: "true"
+      effect: "NoExecute"
+helmController:
+  tolerations:
+    - key: "node.cilium.io/agent-not-ready"
+      operator: "Equal"
+      value: "true"
+      effect: "NoExecute"
+imageAutomationController:
+  tolerations:
+    - key: "node.cilium.io/agent-not-ready"
+      operator: "Equal"
+      value: "true"
+      effect: "NoExecute"
+imageReflectionController:
+  tolerations:
+    - key: "node.cilium.io/agent-not-ready"
+      operator: "Equal"
+      value: "true"
+      effect: "NoExecute"
+kustomizeController:
+  tolerations:
+    - key: "node.cilium.io/agent-not-ready"
+      operator: "Equal"
+      value: "true"
+      effect: "NoExecute"
+notificationController:
+  tolerations:
+    - key: "node.cilium.io/agent-not-ready"
+      operator: "Equal"
+      value: "true"
+      effect: "NoExecute"
+sourceController:
+  tolerations:
+    - key: "node.cilium.io/agent-not-ready"
+      operator: "Equal"
+      value: "true"
+      effect: "NoExecute"

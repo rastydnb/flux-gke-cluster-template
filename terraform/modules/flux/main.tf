@@ -4,5 +4,5 @@ resource "helm_release" "flux" {
   name             = "flux2"
   namespace        = "flux-system"
   create_namespace = true
-  //values = [fileexists("${path.root}/${var.values_file}") == true ? file("${path.root}/${var.values_file}") : ""]
+  values = [fileexists("${path.root}/${var.values_file}") == true ? file("${path.root}/${var.values_file}") : ""]
 }

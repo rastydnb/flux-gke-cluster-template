@@ -1,3 +1,4 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -25,19 +26,19 @@ spec:
     keepHistory: false
   values:
     cluster:
-      name: ninjawombat
+      name: gke-cluster
       id: 1
     hubble:
       enabled: true
       metrics:
         enabled:
-        - dns:query
-        - drop
-        - tcp
-        - flow
-        - port-distribution
-        - icmp
-        - http
+          - dns:query
+          - drop
+          - tcp
+          - flow
+          - port-distribution
+          - icmp
+          - http
         serviceMonitor:
           enabled: true
         dashboards:
@@ -59,10 +60,10 @@ spec:
           annotations:
             hajimari.io/icon: simple-icons:cilium
           hosts:
-          - &host "hubble.${SECRET_DOMAIN}"
+            - &host "hubble.${SECRET_DOMAIN}"
           tls:
-          - hosts:
-            - *host
+            - hosts:
+                - *host
     nodeinit:
     # -- Enable the node initialization DaemonSet
       enabled: true
