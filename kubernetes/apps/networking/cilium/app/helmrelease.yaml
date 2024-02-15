@@ -25,32 +25,32 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    cluster:
-      name: gke-cluster
-      id: 1
+        # cluster:
+    #   name: monitorwombat
+    #   id: 1
     hubble:
       enabled: true
-      metrics:
-        enabled:
-          - dns:query
-          - drop
-          - tcp
-          - flow
-          - port-distribution
-          - icmp
-          - http
-        serviceMonitor:
-          enabled: true
-        dashboards:
-          enabled: true
-          annotations:
-            grafana_folder: Cilium
+    #   metrics:
+    #     enabled:
+    #     - dns:query
+    #     - drop
+    #     - tcp
+    #     - flow
+    #     - port-distribution
+    #     - icmp
+    #     - http
+    #     serviceMonitor:
+    #       enabled: false
+    #     dashboards:
+    #       enabled: true
+    #       annotations:
+    #         grafana_folder: Cilium
       relay:
         enabled: true
         rollOutPods: true
-        prometheus:
-          serviceMonitor:
-            enabled: true
+    #     prometheus:
+    #       serviceMonitor:
+    #         enabled: false
       ui:
         enabled: true
         rollOutPods: true
@@ -60,12 +60,11 @@ spec:
           annotations:
             hajimari.io/icon: simple-icons:cilium
           hosts:
-            - &host "hubble.${SECRET_DOMAIN}"
-          tls:
-            - hosts:
-                - *host
+          - &host "hubble.test"
+    # tls:
+    # - hosts:
+    #   - *host
     nodeinit:
-    # -- Enable the node initialization DaemonSet
       enabled: true
       reconfigureKubelet: true
       removeCbrBridge: true
@@ -75,6 +74,7 @@ spec:
       enabled: true
     ipam:
       mode: kubernetes
+    ipv4NativeRoutingCIDR: 5.0.0.0/16
     ingressController:
       enabled: true
       default: true
@@ -83,32 +83,4 @@ spec:
         annotations:
           cloud.google.com/neg: '{"exposed_ports": {"80":{"name": "ingressgateway"}}}'
 
-    # Config mantenida
-    ipv4NativeRoutingCIDR: "${CLUSTER_CIDR}"
-
-    # kubeProxyReplacement: strict
-    # kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
-
-    # operator:
-    #   replicas: 1
-    #   rollOutPods: true
-    #   prometheus:
-    #     enabled: true
-    #     serviceMonitor:
-    #       enabled: true
-    #   dashboards:
-    #     enabled: true
-    #     annotations:
-    #       grafana_folder: Cilium
-    # prometheus:
-    #   enabled: true
-    #   serviceMonitor:
-    #     enabled: true
-    #     trustCRDsExist: true
-    # dashboards:
-    #   enabled: true
-    #   annotations:
-    #     grafana_folder: Cilium
-    # rollOutCiliumPods: true
-    # ####
 
