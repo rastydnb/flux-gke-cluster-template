@@ -17,6 +17,8 @@ resource "helm_release" "flux" {
   name             = "flux2"
   namespace        = "flux-system"
   create_namespace = true
-  values = ["${path.root}/flux_init.yaml"]
+  values = [
+    file("${path.root}/flux_init.yaml")
+  ]
   depends_on = [ helm_release.cilium ]
 }
