@@ -1,42 +1,37 @@
-cli:
-  tolerations:
-    - key: "node.cilium.io/agent-not-ready"
-      operator: "Equal"
-      value: "true"
-      effect: "NoExecute"
-helmController:
-  tolerations:
-    - key: "node.cilium.io/agent-not-ready"
-      operator: "Equal"
-      value: "true"
-      effect: "NoExecute"
-imageAutomationController:
-  tolerations:
-    - key: "node.cilium.io/agent-not-ready"
-      operator: "Equal"
-      value: "true"
-      effect: "NoExecute"
-imageReflectionController:
-  tolerations:
-    - key: "node.cilium.io/agent-not-ready"
-      operator: "Equal"
-      value: "true"
-      effect: "NoExecute"
-kustomizeController:
-  tolerations:
-    - key: "node.cilium.io/agent-not-ready"
-      operator: "Equal"
-      value: "true"
-      effect: "NoExecute"
-notificationController:
-  tolerations:
-    - key: "node.cilium.io/agent-not-ready"
-      operator: "Equal"
-      value: "true"
-      effect: "NoExecute"
-sourceController:
-  tolerations:
-    - key: "node.cilium.io/agent-not-ready"
-      operator: "Equal"
-      value: "true"
-      effect: "NoExecute"
+# cluster:
+#   name: monitorwombat
+#   id: 1
+# hubble:
+#   enabled: true
+
+#   relay:
+#     enabled: true
+#     rollOutPods: true
+#   ui:
+#     enabled: true
+#     rollOutPods: true
+#     ingress:
+#       enabled: true
+#       className: internal
+#       annotations:
+#         hajimari.io/icon: simple-icons:cilium
+#       hosts:
+#       - &host "hubble.test"
+nodeinit:
+  enabled: true
+  reconfigureKubelet: true
+  removeCbrBridge: true
+cni:
+  binPath: /home/kubernetes/bin
+gke:
+  enabled: true
+ipam:
+  mode: kubernetes
+ipv4NativeRoutingCIDR: 5.0.0.0/16
+ingressController:
+  enabled: true
+  default: true
+  service:
+    type: ClusterIP
+    annotations:
+      cloud.google.com/neg: '{"exposed_ports": {"80":{"name": "ingressgateway"}}}'
