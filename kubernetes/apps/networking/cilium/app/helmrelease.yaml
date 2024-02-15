@@ -1,4 +1,3 @@
----
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -9,7 +8,7 @@ spec:
   chart:
     spec:
       chart: cilium
-      version: 1.14.2
+      version: 1.15.1
       sourceRef:
         kind: HelmRepository
         name: cilium
@@ -25,32 +24,32 @@ spec:
   uninstall:
     keepHistory: false
   values:
-        # cluster:
+    # cluster:
     #   name: monitorwombat
     #   id: 1
     hubble:
       enabled: true
-    #   metrics:
-    #     enabled:
-    #     - dns:query
-    #     - drop
-    #     - tcp
-    #     - flow
-    #     - port-distribution
-    #     - icmp
-    #     - http
-    #     serviceMonitor:
-    #       enabled: false
-    #     dashboards:
-    #       enabled: true
-    #       annotations:
-    #         grafana_folder: Cilium
+      #   metrics:
+      #     enabled:
+      #     - dns:query
+      #     - drop
+      #     - tcp
+      #     - flow
+      #     - port-distribution
+      #     - icmp
+      #     - http
+      #     serviceMonitor:
+      #       enabled: false
+      #     dashboards:
+      #       enabled: true
+      #       annotations:
+      #         grafana_folder: Cilium
       relay:
         enabled: true
         rollOutPods: true
-    #     prometheus:
-    #       serviceMonitor:
-    #         enabled: false
+        #     prometheus:
+        #       serviceMonitor:
+        #         enabled: false
       ui:
         enabled: true
         rollOutPods: true
