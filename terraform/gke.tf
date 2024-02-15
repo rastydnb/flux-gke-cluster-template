@@ -106,7 +106,7 @@ resource "local_file" "kubeconfig" {
   filename = "../kubeconfig"
 }
 
-module "flux" {
+module "bootstrap_infra" {
   depends_on = [ local_file.kubeconfig ]
-  source = "./modules/flux"
+  source = "./modules/bootstrap_infra"
 }

@@ -1,0 +1,18 @@
+nodeinit:
+  enabled: true
+  reconfigureKubelet: true
+  removeCbrBridge: true
+cni:
+  binPath: /home/kubernetes/bin
+gke:
+  enabled: true
+ipam:
+  mode: kubernetes
+ipv4NativeRoutingCIDR: 5.0.0.0/16
+ingressController:
+  enabled: true
+  default: true
+  service:
+    type: ClusterIP
+    annotations:
+      cloud.google.com/neg: '{"exposed_ports": {"80":{"name": "ingressgateway"}}}'
