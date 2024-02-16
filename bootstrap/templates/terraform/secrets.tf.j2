@@ -12,4 +12,7 @@ module "secrets" {
 module "iam" {
     source              = "./modules/iam"
     project_id          = var.project_id
+    role                ="roles/secretmanager.secretAccessor"
+    service_account = "external-secrets"
+    namespace = "kube-system"
 }

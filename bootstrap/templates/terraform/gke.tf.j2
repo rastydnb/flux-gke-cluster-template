@@ -109,4 +109,5 @@ resource "local_file" "kubeconfig" {
 module "bootstrap_infra" {
   depends_on = [ local_file.kubeconfig ]
   source = "./modules/bootstrap_infra"
+  project_id  = var.project_id
 }

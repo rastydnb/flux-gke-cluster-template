@@ -3,3 +3,7 @@ variable "values_file" {
   type        = string
   default     = "values.yaml"
 }
+
+variable "project_id" {
+  default = "GCP_PROJECT_ID"
+}

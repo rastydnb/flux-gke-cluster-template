@@ -13,3 +13,7 @@ variable "service_account" {
 variable "project_id" {
   default = "GCP_PROJECT_ID"
 }
+
+variable "role" {
+  default = "roles/test"
+}
