@@ -1,2 +1,0 @@
-Generar buckets por defecto? Hay aplicaciones como loki que lo requieren
-https://cloud.google.com/storage/docs/creating-buckets#storage-create-bucket-terraform
