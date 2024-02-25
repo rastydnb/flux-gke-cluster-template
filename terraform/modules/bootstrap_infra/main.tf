@@ -25,14 +25,14 @@ resource "helm_release" "flux" {
 
 
 
-module "iam_gmp" {
-    source              = "../iam"
-    project_id          = var.project_id
-    namespace           = "gmp-public"
-    service_account     = "gmp-magic"
-    role    = "roles/monitoring.metricWriter"
-    depends_on = [ helm_release.cilium ]
-}
+# module "iam_gmp" {
+#     source              = "../iam"
+#     project_id          = var.project_id
+#     namespace           = "gmp-public"
+#     service_account     = "gmp-magic"
+#     role    = "roles/monitoring.metricWriter"
+#     depends_on = [ helm_release.cilium ]
+# }
 
 # resource "helm_release" "kube-prometheus-stack" {
 #   repository       = "oci://ghcr.io/prometheus-community/charts"
