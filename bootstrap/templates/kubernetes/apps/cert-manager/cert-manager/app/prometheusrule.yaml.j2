@@ -1,13 +1,14 @@
 #jinja2: trim_blocks: True
 ---
-apiVersion: monitoring.coreos.com/v1
-kind: PrometheusRule
+apiVersion: monitoring.googleapis.com/v1
+kind: Rules
 metadata:
   name: cert-manager.rules
   namespace: cert-manager
 spec:
   groups:
     - name: cert-manager
+      interval: 60s
       rules:
         - alert: CertManagerAbsent
           expr: |
@@ -21,6 +22,7 @@ spec:
             runbook_url: https://gitlab.com/uneeq-oss/cert-manager-mixin/-/blob/master/RUNBOOK.md#certmanagerabsent
             summary: "Cert Manager has dissapeared from Prometheus service discovery."
     - name: certificates
+      interval: 60s
       rules:
         - alert: CertManagerCertExpirySoon
           expr: |
